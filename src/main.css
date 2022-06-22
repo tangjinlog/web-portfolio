@@ -10,6 +10,7 @@ html {
 
 body {
   letter-spacing: -0.05em;
+  height: 500vh;
 }
 
 a {
@@ -45,4 +46,19 @@ a {
 
 .nav-links .a {
   margin-right: auto;
+}
+
+.progress-bar-con {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  border: 1px solid black;
+  top: 45px;
+  left: 0;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: limegreen;
 }

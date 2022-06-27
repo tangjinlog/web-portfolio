@@ -34,6 +34,14 @@
       } 
     },
   ]
+  function setLayout() {
+    for(let i=0; i< sceneInfo.length; i++) {
+      sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+      sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
+
+    }
+  }
+
 
   const progressBar = document.querySelector('.progress-bar' ); 
   window.addEventListener('scroll', function() {
@@ -42,5 +50,7 @@
 
   })
 
-
+  window.addEventListener('load', ()=> {
+    setLayout();
+  })
 })();

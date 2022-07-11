@@ -1,0 +1,149 @@
+/*--------------------*/
+/*        reset       */
+/*--------------------*/
+
+@charset 'utf-8';
+
+html {
+  font-size: 14px;
+}
+
+body {
+  letter-spacing: -0.05em;
+  /* height: 500vh; */
+}
+
+a {
+  color: rgb(29, 29, 31);
+  text-decoration: none;
+}
+
+/*--------------------*/
+/*      component     */
+/*--------------------*/
+
+.header-elem {
+  position: fixed;
+  top: -15%;
+  left: 0;
+  width: 100%;
+  transition: .3s ease-in-out;
+}
+.nav {
+  height: 44px;
+  padding: 0 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  max-width: 1000px;
+  height: 100%;
+  margin-inline: auto;
+}
+
+.nav-links a:not(.a) {
+  margin-left: 2em;
+}
+
+.nav-links .a {
+  margin-right: auto;
+}
+
+/* progress-bar */
+.progress-bar-con {
+  height: 5px;
+  border: 1px solid black;
+  top: 45px;
+  left: 0;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: limegreen;
+}
+
+.title-logo {
+  position: relative;
+  text-align: center;
+  font-size: 4rem;
+  z-index: 10;
+  top: -5vh;
+  color: white;
+  /* outline: 3px solid limegreen; */
+  text-transform: uppercase;
+}
+
+.scroll-section {
+  padding-top: 50vh;
+}
+
+.main-message {
+  text-align: center;
+  top: 45vh;
+  z-index: 5;
+  color: white;
+  transition: .5s;
+  font-size: clamp(1.5rem, 2vw, 3rem);
+  opacity: 0;
+}
+.main-message.a {
+  /* outline: 2px solid limegreen; */
+}
+
+.sticky-elem {
+  position: fixed;
+  /* top: 0; */
+  left: 0;
+  width: 100%;
+  
+}
+
+.main-logo {
+  top: 50%;
+  left: 50%;
+  width: 2000vw;
+  transform: translate(-15%, -45%);
+  /* outline: 3px solid limegreen; */
+  /* z-index: 1000; */
+}
+/* .div1 {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  box-shadow: 5px 5px 15px 1px #777;
+  transform: translate(-50%, -50%);
+}
+.div1>a {
+  display: block;
+  margin: 30px auto 0;
+  width: 100px;
+  height: 100px;
+  background: #ddd;
+  line-height: 100px;
+  font-size: 20px;
+  font-weight: bold;
+}
+a> div {
+  width: 100px;
+  height: 100px;
+  background: skyblue;
+  opacity: 0.5;
+  transition: .5s;
+}
+.div1 p {
+  padding-top: 20px;
+  font-size: 17px;
+}
+a:hover .css {
+  /* matrix(scaleX, skewY, skewX, scaleY, translateX, translateY) */
+  /* transform: matrix(1, 0.95, 1, 1, 0, 0); */
+  /* transform-origin: 100% 0; */
+  /* transform:  skewY(55deg) skewX(55deg);
+} */ 

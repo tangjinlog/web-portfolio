@@ -18,6 +18,7 @@ a {
   text-decoration: none;
 }
 
+
 /*--------------------*/
 /*      component     */
 /*--------------------*/
@@ -27,6 +28,7 @@ a {
   top: -15%;
   left: 0;
   width: 100%;
+  /* background: black; */
   transition: .3s ease-in-out;
 }
 .nav {
@@ -77,7 +79,9 @@ a {
 }
 
 .scroll-section {
+  position: relative;
   padding-top: 50vh;
+  outline: 2px solid limegreen;
 }
 
 .main-message {
@@ -88,9 +92,6 @@ a {
   transition: .5s;
   font-size: clamp(1.5rem, 2vw, 3rem);
   opacity: 0;
-}
-.main-message.a {
-  /* outline: 2px solid limegreen; */
 }
 
 .sticky-elem {
@@ -106,7 +107,7 @@ a {
   left: 50%;
   width: 2000vw;
   transform: translate(-15%, -45%);
-  /* outline: 3px solid limegreen; */
+  outline: 3px solid limegreen;
   /* z-index: 1000; */
 }
 /* .div1 {

@@ -3,18 +3,22 @@
   let yOffset = 0; // pageYOffset
   let currentScene = 0;
   let prevScrollHeight = 0; // yOffset이 있는 currentScene 보다 이전의 scene들의 높이 합
+  let delayedYOffset = 0;
+  let acc = 0.1;
+  let rafId;
+  let rafState;
   
 
   const sceneInfo = [
     { 
       type: 'sticky',
-      heightNum: 3,
+      heightNum: 5,
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-0'),
         messageA: document.querySelector('.main-message.a'),
         messageB: document.querySelector('.main-message.b'),
-        main_logo: document.querySelector('.main-logo'),
+        mainLogo: document.querySelector('.main-logo'),
         headerElem: document.querySelector('.header-elem'),
       },
       values: {
@@ -26,12 +30,12 @@
         messageB_opacity_in: [0, 1, { start: 0.27, end: 0.33 }],
         messageA_opacity_out: [1, 0, { start: 0.25, end: 0.31 }],
         messageB_opacity_out: [1, 0, { start: 0.43, end: 0.49 }],
-        mainLogo_width_in: [2000, 80, { start: 0.5, end: 0.7 }],
-        mainLogo_width_out: [200, 30, { start: 0, end: 0 }],
+        mainLogo_width_in: [2000, 100, { start: 0.5, end: 0.7 }],
+        mainLogo_width_out: [100, 80, { start: 0.7, end: 0.75 }],
         mainLogo_translateX_in: [-15, -50, { start: 0.6, end: 0.7 }],
         mainLogo_translateY_in: [-45, -50, { start: 0.6, end: 0.7 }],
-        mainLogo_opacity_out: [1, 0, { start: 0.72, end: 0.8 }],
-        header_translateY_in: [-15, -50, { start: 0.77, end: 0.8 }],
+        mainLogo_opacity_out: [1, 0, { start: 0.8, end: 0.86 }],
+        svgStartY: 0,
       } 
     },
     { 
@@ -67,8 +71,19 @@
     for(let i=0; i< sceneInfo.length; i++) {
       sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
       sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
-      // yOffset = window.pageYOffset;
     }
+    /* currentScene 판별 */
+    yOffset = window.pageYOffset;
+    let totalScrollHeight = 0;
+    for( let i = 0; i < sceneInfo.length; i++ ) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+      if( totalScrollHeight >= yOffset ) {
+        currentScene = i;
+        console.log(currentScene);
+        break
+      }
+    }
+    document.body.setAttribute('id', `show-scene-${currentScene}`);
   }
 
   function checkMenu() {
@@ -85,7 +100,6 @@
     // nav
     if(currentScene === 0) {
       if( scrollRatio > 0.77 ) {
-        console.log('start');
         objs.headerElem.style.top = 0;
       } else {
         objs.headerElem.style.top = `-15%`;
@@ -95,11 +109,41 @@
   }
 
   function scrollLoop() {
+    /* currentScene 판별 */
+    prevScrollHeight = 0;
+    enterNewScene = false;
+    /* prevScrollHeigt 세팅 */
+    for (let i = 0; i < currentScene; i++) {
+      prevScrollHeight += sceneInfo[i].scrollHeight;
+    }
+    /* 스크롤 내릴 때 */
+    if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+      currentScene++;
+      document.body.setAttribute('id', `show-scene-${currentScene}`);
+    }
+    /* 스크롤 올릴 때 */
+    if (yOffset < prevScrollHeight) {
+      if(currentScene === 0) return
+      enterNewScene = true;
+      currentScene--;
+      document.body.setAttribute('id', `show-scene-${currentScene}`);
+    }
+3
+    if (enterNewScene) return;
     
-    checkMenu();
     playAnimation();
   }
 
+  function loop() {
+    delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
+    let tempScroll = 0;
+
+    /* 시작하고 자동으로 조금 스크롤 */
+    if( Math.abs(window.pageYOffset - delayedYOffset) < 0.1 ) {
+      cancelAnimationFrame(loop);
+      rafState = false;
+    }
+  }
 
 
   function calcValues(values, currentYOffset) {
@@ -129,8 +173,6 @@
   }
 
   function playAnimation() {
-    console.log(sceneInfo[0].scrollHeight);
-    // console.log(yOffset);
     const objs = sceneInfo[currentScene].objs;
     const values = sceneInfo[currentScene].values;
     const currentYOffset =  yOffset - prevScrollHeight;
@@ -139,6 +181,7 @@
     
     switch(currentScene) {
       case 0: {
+        console.log(objs.mainLogo.style.width);
         if(scrollRatio < 0.2) {
           objs.messageA.style.transform = `translateY(${calcValues(values.messageA_translateY_in ,currentYOffset)}%)`;
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in ,currentYOffset);
@@ -153,11 +196,17 @@
           objs.messageB.style.transform = `translateY(${calcValues(values.messageB_translateY_out ,currentYOffset)}%)`;
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out ,currentYOffset);
         }
-        if(scrollRatio < 0.71) {
-          objs.main_logo.style.width = `${calcValues(values.mainLogo_width_in ,currentYOffset)}vw`;
-          objs.main_logo.style.transform = `translate(${calcValues(values.mainLogo_translateX_in ,currentYOffset)}%,${calcValues(values.mainLogo_translateY_in ,currentYOffset)}%)`;
+        if(scrollRatio <= 0.7) {
+          // if( !values.svgStartY ) {
+          //   values.svgStartY = objs.mainLogo.offsetTop; //fixed로 현재 창 에 맞춰져 있어서 작음
+          //   values.mainLogo_width_in[2].end = values.svgStartY / scrollHeight + 0.533;
+          //   console.log(values.mainLogo_width_in)
+          // }
+          objs.mainLogo.style.width = `${calcValues(values.mainLogo_width_in ,currentYOffset)}vw`;
+          objs.mainLogo.style.transform = `translate(${calcValues(values.mainLogo_translateX_in ,currentYOffset)}%,${calcValues(values.mainLogo_translateY_in ,currentYOffset)}%)`;
         } else {
-          objs.main_logo.style.opacity = calcValues(values.mainLogo_opacity_out, currentYOffset);
+          objs.mainLogo.style.width = `${calcValues(values.mainLogo_width_out ,currentYOffset)}vw`;
+          objs.mainLogo.style.opacity = calcValues(values.mainLogo_opacity_out, currentYOffset);
         }
         
       }
@@ -177,7 +226,13 @@
 
   window.addEventListener('scroll', function() {
     yOffset = window.pageYOffset;
+    checkMenu();
     scrollLoop();
+
+    if( !rafState ) {
+      rafId = requestAnimationFrame(loop);
+      rafState = true;
+    }
   })
 
 

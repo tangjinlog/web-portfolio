@@ -44,6 +44,10 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-1'),
+        rocket: document.querySelector('.rocket-svg'),
+      },
+      values: {
+        rocket_left_in: [110, -25, { start: 0.3, end: 0.6 }],
       } 
     },
     { 
@@ -134,16 +138,16 @@
     playAnimation();
   }
 
-  function loop() {
-    delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
-    let tempScroll = 0;
+  // function loop() {
+  //   delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
 
-    /* 시작하고 자동으로 조금 스크롤 */
-    if( Math.abs(window.pageYOffset - delayedYOffset) < 0.1 ) {
-      cancelAnimationFrame(loop);
-      rafState = false;
-    }
-  }
+  //   rafId = requestAnimationFrame(loop);
+
+  //   if( Math.abs(window.pageYOffset - delayedYOffset) < 1 ) {
+  //     cancelAnimationFrame(loop);
+  //     rafState = false;
+  //   }
+  // }
 
 
   function calcValues(values, currentYOffset) {
@@ -181,19 +185,18 @@
     
     switch(currentScene) {
       case 0: {
-        console.log(objs.mainLogo.style.width);
         if(scrollRatio < 0.2) {
-          objs.messageA.style.transform = `translateY(${calcValues(values.messageA_translateY_in ,currentYOffset)}%)`;
+          objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in ,currentYOffset)}%, 0)`;
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in ,currentYOffset);
         } else {
-          objs.messageA.style.transform = `translateY(${calcValues(values.messageA_translateY_out ,currentYOffset)}%)`;
+          objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out ,currentYOffset)}%, 0)`;
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_out ,currentYOffset);
         }
         if(scrollRatio < 0.4) {
-          objs.messageB.style.transform = `translateY(${calcValues(values.messageB_translateY_in ,currentYOffset)}%)`;
+          objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in ,currentYOffset)}%, 0)`;
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_in ,currentYOffset);
         } else {
-          objs.messageB.style.transform = `translateY(${calcValues(values.messageB_translateY_out ,currentYOffset)}%)`;
+          objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out ,currentYOffset)}%, 0)`;
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out ,currentYOffset);
         }
         if(scrollRatio <= 0.7) {
@@ -203,12 +206,18 @@
           //   console.log(values.mainLogo_width_in)
           // }
           objs.mainLogo.style.width = `${calcValues(values.mainLogo_width_in ,currentYOffset)}vw`;
-          objs.mainLogo.style.transform = `translate(${calcValues(values.mainLogo_translateX_in ,currentYOffset)}%,${calcValues(values.mainLogo_translateY_in ,currentYOffset)}%)`;
+          objs.mainLogo.style.transform = `translate3d(${calcValues(values.mainLogo_translateX_in ,currentYOffset)}%,${calcValues(values.mainLogo_translateY_in ,currentYOffset)}%, 0)`;
         } else {
           objs.mainLogo.style.width = `${calcValues(values.mainLogo_width_out ,currentYOffset)}vw`;
           objs.mainLogo.style.opacity = calcValues(values.mainLogo_opacity_out, currentYOffset);
         }
         
+      }
+      break;
+      case 1: {
+        
+        objs.rocket.style.transform = `rotate(-90deg)`;
+        objs.rocket.style.left = `${calcValues(values.rocket_left_in, currentYOffset)}%`;
       }
     }
 
@@ -218,22 +227,40 @@
 
   window.addEventListener('load', ()=> {
     setLayout();
-  })
+    
+    /* 시작하고 자동으로 조금 스크롤 */
+    let tempYOffset = yOffset;
+    let tempScrollCount = 0;
+    if( yOffset > 0) {
+      let siId = setInterval(()=> {
+        window.scrollTo(0, tempYOffset);
+        tempYOffset += 3
 
-  window.addEventListener('resize', ()=> {
-    setLayout();
-  })
-
-  window.addEventListener('scroll', function() {
-    yOffset = window.pageYOffset;
-    checkMenu();
-    scrollLoop();
-
-    if( !rafState ) {
-      rafId = requestAnimationFrame(loop);
-      rafState = true;
+        if(tempScrollCount > 20) {
+          clearInterval(siId);
+        }
+        tempScrollCount++;
+      },20)
     }
+
+    window.addEventListener('scroll', function() {
+      yOffset = window.pageYOffset;
+      checkMenu();
+      scrollLoop();
+  
+      // if( !rafState ) {
+      //   rafId = requestAnimationFrame(loop);
+      //   rafState = true;
+      // }
+    })
+
+    window.addEventListener('resize', ()=> {
+      setLayout();
+    })
+
   })
+
+
 
 
   //test

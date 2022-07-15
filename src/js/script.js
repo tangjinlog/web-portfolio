@@ -32,8 +32,8 @@
         messageB_opacity_out: [1, 0, { start: 0.43, end: 0.49 }],
         mainLogo_width_in: [2000, 100, { start: 0.5, end: 0.7 }],
         mainLogo_width_out: [100, 80, { start: 0.7, end: 0.75 }],
-        mainLogo_translateX_in: [-15, -50, { start: 0.6, end: 0.7 }],
-        mainLogo_translateY_in: [-45, -50, { start: 0.6, end: 0.7 }],
+        mainLogo_translateX_in: [-15, -50, { start: 0.6, end: 0.75 }],
+        mainLogo_translateY_in: [-45, -50, { start: 0.6, end: 0.75 }],
         mainLogo_opacity_out: [1, 0, { start: 0.8, end: 0.86 }],
         svgStartY: 0,
       } 
@@ -45,9 +45,12 @@
       objs: {
         container: document.querySelector('#scroll-section-1'),
         rocket: document.querySelector('.rocket-svg'),
+        rocketCon: document.querySelector('.rocket-con'),
+        rocketMsg: document.querySelector('.rocket-msg'),
+      
       },
       values: {
-        rocket_left_in: [110, -25, { start: 0.3, end: 0.6 }],
+        rocket_left_in: [110, -130, { start: 0.3, end: 0.6 }],
       } 
     },
     { 
@@ -56,7 +59,33 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-2'),
-      } 
+        listRocket: document.querySelector('.list-rocket-con'),
+        leftBox: document.querySelector('.left-box'),
+        rightBox: document.querySelector('.right-box'),
+        yPosition: document.querySelector('.y-position'),
+      },
+      values: {
+        listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0.5 }],
+        listRocket_opacity_in: [0, 1, { start: 0.01, end: 0.05 }],
+        listRocket_width_in: [0, 160, { start: 0.01, end: 0.5 }],
+        leftBox_width_in: [0, 30, { start: 0.01, end: 0.5 }],
+        rightBox_width_in: [0, 30, { start: 0.01, end: 0.5 }],
+        leftBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
+        rightBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
+        leftBox_left_in: [0, 55, { start: 0.55, end: 0.65 }],
+        rightBox_right_in: [0, 55, { start: 0.55, end: 0.65 }],
+        svgStartY: 0,
+        // listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0 }],
+        // listRocket_opacity_in: [0, 1, { start: 0.01, end: 0 }],
+        // listRocket_width_in: [10, 160, { start: 0.01, end: 0 }],
+        // leftBox_width_in: [0, 30, { start: 0.01, end: 0 }],
+        // rightBox_width_in: [0, 30, { start: 0.01, end: 0 }],
+        // leftBox_height_in: [0, 120, { start: 0.01, end: 0 }],
+        // rightBox_height_in: [0, 120, { start: 0.01, end: 0 }],
+        // leftBox_left_in: [0, 49, { start: 0.35, end: 0.45 }],
+        // rightBox_right_in: [0, 49, { start: 0.35, end: 0.45 }],
+        // svgStartY: 0,
+      }
     },
     {
       type: 'sticky',
@@ -95,7 +124,7 @@
     const currentYOffset =  yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
     const scrollRatio = currentYOffset / scrollHeight;
-    // progress bar
+    // progress bar`
     const progressBar = document.querySelector('.progress-bar' ); 
     window.addEventListener('scroll', function() {
       // console.log(window.pageYOffset / document.body. offsetHeight);
@@ -108,7 +137,8 @@
       } else {
         objs.headerElem.style.top = `-15%`;
       }
-
+    } else {
+      sceneInfo[0].objs.headerElem.style.top = 0;
     }
   }
 
@@ -200,14 +230,21 @@
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out ,currentYOffset);
         }
         if(scrollRatio <= 0.7) {
-          // if( !values.svgStartY ) {
-          //   values.svgStartY = objs.mainLogo.offsetTop; //fixed로 현재 창 에 맞춰져 있어서 작음
-          //   values.mainLogo_width_in[2].end = values.svgStartY / scrollHeight + 0.533;
-          //   console.log(values.mainLogo_width_in)
-          // }
+          if( !values.svgStartY ) {
+            values.svgStartY = objs.mainLogo.offsetTop; //fixed로 현재 창 에 맞춰져 있어서 작음
+            values.mainLogo_width_out[2].end = values.svgStartY / scrollHeight + 0.649;
+            values.mainLogo_translateX_in[2].end = values.svgStartY / scrollHeight + 0.599;
+            values.mainLogo_translateY_in[2].end = values.svgStartY / scrollHeight + 0.599;
+            console.log(values.mainLogo_translateY_in)
+          }
           objs.mainLogo.style.width = `${calcValues(values.mainLogo_width_in ,currentYOffset)}vw`;
           objs.mainLogo.style.transform = `translate3d(${calcValues(values.mainLogo_translateX_in ,currentYOffset)}%,${calcValues(values.mainLogo_translateY_in ,currentYOffset)}%, 0)`;
         } else {
+          // if( !values.svgStartY ) {
+          //   values.svgStartY = objs.mainLogo.offsetTop; //fixed로 현재 창 에 맞춰져 있어서 작음
+          //   values.mainLogo_width_out[2].end = values.svgStartY / scrollHeight + 0.649;
+          //   console.log(values.mainLogo_width_in)
+          // }
           objs.mainLogo.style.width = `${calcValues(values.mainLogo_width_out ,currentYOffset)}vw`;
           objs.mainLogo.style.opacity = calcValues(values.mainLogo_opacity_out, currentYOffset);
         }
@@ -215,9 +252,43 @@
       }
       break;
       case 1: {
-        
-        objs.rocket.style.transform = `rotate(-90deg)`;
-        objs.rocket.style.left = `${calcValues(values.rocket_left_in, currentYOffset)}%`;
+        if( scrollRatio <= 0.6) {
+          objs.rocket.style.transform = `rotate(-90deg)`;
+          objs.rocketCon.style.left = `${calcValues(values.rocket_left_in, currentYOffset)}%`;
+          // objs.rocketMsg.style.left = `${calcValues(values.rocketMsg_left_in, currentYOffset)}%`;
+        }
+      }
+      break;
+      case 2: {
+        // if( !values.svgStartY ) {
+        //   values.svgStartY = objs.yPosition.offsetTop;
+        //   values.listRocket_width_in[2].start = (window.innerHeight / 2) / scrollHeight;
+        //   values.listRocket_rotateY_in[2].start = (window.innerHeight / 2) / scrollHeight;
+        //   values.listRocket_width_in[2].end = values.svgStartY / scrollHeight + 0.2;
+        //   values.listRocket_rotateY_in[2].end = values.svgStartY / scrollHeight + 0.2;
+        //   values.leftBox_width_in[2].end = values.svgStartY / scrollHeight + 0.2;
+        //   values.rightBox_width_in[2].end = values.svgStartY / scrollHeight + 0.2;
+        //   values.leftBox_height_in[2].end = values.svgStartY / scrollHeight + 0.2;
+        //   values.rightBox_height_in[2].end = values.svgStartY / scrollHeight + 0.2;
+        //   values.leftBox_left_in[2].end = values.svgStartY / scrollHeight + 0.35;
+        //   values.rightBox_right_in[2].end = values.svgStartY / scrollHeight + 0.35;
+        //   values.listRocket_opacity_in[2].end = values.svgStartY / scrollHeight;
+        // }
+        // console.log(values.listRocket_opacity_in[2].end)
+
+        if( scrollRatio <= 0.53) {
+          objs.listRocket.style.opacity = `${calcValues(values.listRocket_opacity_in, currentYOffset)}`;
+          objs.listRocket.style.width = `${calcValues(values.listRocket_width_in, currentYOffset)}vw`;
+          objs.listRocket.style.transform = `rotateX(${calcValues(values.listRocket_rotateY_in, currentYOffset)}deg) translate3d(-50%, -50%, 0)`;
+          objs.leftBox.style.width = `${calcValues(values.leftBox_width_in, currentYOffset)}vw`;
+          objs.leftBox.style.height = `${calcValues(values.leftBox_height_in, currentYOffset)}vh`;
+          objs.rightBox.style.width = `${calcValues(values.rightBox_width_in, currentYOffset)}vw`;
+          objs.rightBox.style.height = `${calcValues(values.rightBox_height_in, currentYOffset)}vh`;
+        } 
+        if( scrollRatio <= 0.65 ) {
+          objs.leftBox.style.left = `${calcValues(values.leftBox_left_in, currentYOffset)}vw`;
+          objs.rightBox.style.right = `${calcValues(values.rightBox_right_in, currentYOffset)}vw`;
+        }
       }
     }
 

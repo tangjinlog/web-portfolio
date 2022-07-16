@@ -7,6 +7,7 @@
   let acc = 0.1;
   let rafId;
   let rafState;
+  const mousePos = { x: 0, y: 0 };
   
 
   const sceneInfo = [
@@ -46,7 +47,7 @@
         container: document.querySelector('#scroll-section-1'),
         rocket: document.querySelector('.rocket-svg'),
         rocketCon: document.querySelector('.rocket-con'),
-        rocketMsg: document.querySelector('.rocket-msg'),
+        // rocketMsg: document.querySelector('.rocket-msg'),
       
       },
       values: {
@@ -62,7 +63,8 @@
         listRocket: document.querySelector('.list-rocket-con'),
         leftBox: document.querySelector('.left-box'),
         rightBox: document.querySelector('.right-box'),
-        yPosition: document.querySelector('.y-position'),
+        // yPosition: document.querySelector('.y-position'),
+        list: document.querySelector('.l-list'),
       },
       values: {
         listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0.5 }],
@@ -74,7 +76,13 @@
         rightBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
         leftBox_left_in: [0, 55, { start: 0.55, end: 0.65 }],
         rightBox_right_in: [0, 55, { start: 0.55, end: 0.65 }],
-        svgStartY: 0,
+        list_opacity_in: [0, 1, { start: 0.58, end: 0.65 }],
+        list_scale_in: [0.5, 1, { start: 0.58, end: 0.65 }],
+        list_opacity_out: [1, 0, { start: 0.73, end: 0.77 }],
+        list_scale_out: [1, 0.5, { start: 0.73, end: 0.77 }],
+        leftBox_left_out: [55, 0, { start: 0.73, end: 0.8 }],
+        rightBox_right_out: [55, 0, { start: 0.73, end: 0.8 }],
+        // svgStartY: 0,
         // listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0 }],
         // listRocket_opacity_in: [0, 1, { start: 0.01, end: 0 }],
         // listRocket_width_in: [10, 160, { start: 0.01, end: 0 }],
@@ -255,7 +263,6 @@
         if( scrollRatio <= 0.6) {
           objs.rocket.style.transform = `rotate(-90deg)`;
           objs.rocketCon.style.left = `${calcValues(values.rocket_left_in, currentYOffset)}%`;
-          // objs.rocketMsg.style.left = `${calcValues(values.rocketMsg_left_in, currentYOffset)}%`;
         }
       }
       break;
@@ -284,11 +291,25 @@
           objs.leftBox.style.height = `${calcValues(values.leftBox_height_in, currentYOffset)}vh`;
           objs.rightBox.style.width = `${calcValues(values.rightBox_width_in, currentYOffset)}vw`;
           objs.rightBox.style.height = `${calcValues(values.rightBox_height_in, currentYOffset)}vh`;
+          
         } 
         if( scrollRatio <= 0.65 ) {
           objs.leftBox.style.left = `${calcValues(values.leftBox_left_in, currentYOffset)}vw`;
           objs.rightBox.style.right = `${calcValues(values.rightBox_right_in, currentYOffset)}vw`;
+          objs.list.style.opacity = `${calcValues(values.list_opacity_in, currentYOffset)}`;
+          objs.list.style.transform = `scale(${calcValues(values.list_scale_in, currentYOffset)})`;
+          window.addEventListener('mousemove', (e)=> {
+            mousePos.x = -1 + (e.clientX / window.innerWidth) * 2;
+            mousePos.y = 1 - (e.clientY / window.innerHeight) * 2;
+            objs.list.style.transform = `rotateX( ${mousePos.y * 20}deg) rotateY( ${mousePos.x * 20}deg)`;
+          })
+        } else {
+          objs.leftBox.style.left = `${calcValues(values.leftBox_left_out, currentYOffset)}vw`;
+          objs.rightBox.style.right = `${calcValues(values.rightBox_right_out, currentYOffset)}vw`;
+          objs.list.style.opacity = `${calcValues(values.list_opacity_out, currentYOffset)}`;
+          objs.list.style.transform = `scale(${calcValues(values.list_scale_out, currentYOffset)})`;
         }
+        
       }
     }
 

@@ -47,11 +47,12 @@ a {
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
 }
-
+#show-scene-1 #scroll-section-1 .rocket-con {
+  display: flex;
+}
 #show-scene-2 #scroll-section-2 .grid-container {
   display: grid;
 }
-
 
 
 /*--------------------*/
@@ -170,12 +171,12 @@ a {
 
 .rocket-con {
   display: flex;
-  width: 105vw;
   align-items: center;
   justify-content: space-between;
+  width: 105vw;
   top: 30%;
   left: 110%;
-  /* outline: 3px solid limegreen; */
+  outline: 3px solid limegreen;
 }
 
 .rocket-msg {
@@ -211,7 +212,6 @@ a {
   position: absolute;
   width: 0;
   height: 0;
-  /* transform: translate(-50%, -50%); */
   outline: 3px solid blue;
   background: white;
 }
@@ -244,7 +244,6 @@ a {
   bottom: 0;
 }
 
-
 #scroll-section-1 p {
   color: white;
 }
@@ -258,29 +257,58 @@ a {
 }
 
 .l-list-con {
+
 }
 
 .l-list {
   top: 50px;
-  left: 27%;
-  width: 45vw;
+  width: 100vw;
   height: calc(100vh - 50px);
   grid-template-columns: repeat(3, minmax(100px, 15vw));
   grid-template-rows: repeat(3);
-
-  outline: 2px solid red;
-  
+  align-content: space-around;
+  justify-content: center;
+  opacity: 0;
+  z-index: 10;
+  background: linear-gradient(to bottom, white 30%);
+  /* outline: 3px solid blue; */
 }
 
 .l-list a {
+  position: relative;
   display: block;
   width: 10vw;
   height: 20vh;
-  color: white;
-  outline: 3px solid limegreen;
-
+  background: white;
+  box-shadow: rgba(240, 46, 170, 0.4) 0 5px, rgba(240, 46, 170, 0.3) 0 10px, rgba(240, 46, 170, 0.2) 0 15px, rgba(240, 46, 170, 0.1) 0 20px, rgba(240, 46, 170, 0.05) 0 25px;
+  transition: .2s transform;
+  /* color: white; */
+  /* outline: 3px solid limegreen; */
+}
+.l-list a:hover {
+  transform: scale(2);
 }
 
+/* .l-list a::after {
+  position: absolute;
+  content: '';
+  top: 2%;
+  left: 2%;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  outline: 3px solid red;
+
+} */
+
+.l-list .l-list-img {
+  height: 100%;
+  background-image: url(../images/example.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+
+}
 
 /* .y-position {
   color: white;

@@ -196,14 +196,14 @@ a {
 
 .boxes {
   position: absolute;
-  /* display: flex; */
+  display: flex;
   /* width: 100%; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
   font-size: 3rem;
-  outline: 3px solid limegreen;
+  outline: 3px solid gold;
   
 }
 
@@ -214,6 +214,10 @@ a {
   height: 0;
   outline: 3px solid blue;
   background: white;
+  color: black;
+  text-align: center;
+  margin: 0 auto;
+  writing-mode: tb;
 }
 .boxes .right-box {
   background: red;

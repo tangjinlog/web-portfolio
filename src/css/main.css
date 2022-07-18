@@ -209,6 +209,9 @@ a {
 
 .boxes .left-box,
 .boxes .right-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   width: 0;
   height: 0;
@@ -218,10 +221,15 @@ a {
   text-align: center;
   margin: 0 auto;
   writing-mode: tb;
+  font-size: clamp(1rem, 8vw, 13vw);
 }
-.boxes .right-box {
-  background: red;
+
+.left-box-msg,
+.right-box-msg {
+  position: absolute;
+  top: 27%;
 }
+
 
 /* section background  */
 #scroll-section-1 {
@@ -258,10 +266,6 @@ a {
 
 .title-msg strong {
   font-size: 3rem;
-}
-
-.l-list-con {
-
 }
 
 .l-list {

@@ -63,8 +63,10 @@
         listRocket: document.querySelector('.list-rocket-con'),
         leftBox: document.querySelector('.left-box'),
         rightBox: document.querySelector('.right-box'),
-        // yPosition: document.querySelector('.y-position'),
+        leftBoxMsg : document.querySelector('.left-box-msg'),
+        rightBoxMsg : document.querySelector('.right-box-msg'),
         list: document.querySelector('.l-list'),
+        
       },
       values: {
         listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0.5 }],
@@ -82,6 +84,8 @@
         list_scale_out: [1, 0.5, { start: 0.73, end: 0.77 }],
         leftBox_left_out: [55, 0, { start: 0.73, end: 0.8 }],
         rightBox_right_out: [55, 0, { start: 0.73, end: 0.8 }],
+        leftBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
+        rightBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
         // svgStartY: 0,
         // listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0 }],
         // listRocket_opacity_in: [0, 1, { start: 0.01, end: 0 }],
@@ -291,9 +295,12 @@
           objs.leftBox.style.height = `${calcValues(values.leftBox_height_in, currentYOffset)}vh`;
           objs.rightBox.style.width = `${calcValues(values.rightBox_width_in, currentYOffset)}vw`;
           objs.rightBox.style.height = `${calcValues(values.rightBox_height_in, currentYOffset)}vh`;
-          
+          objs.leftBoxMsg.style.opacity = `${calcValues(values.leftBoxMsg_opacity_in, currentYOffset)}`;
+          objs.rightBoxMsg.style.opacity = `${calcValues(values.rightBoxMsg_opacity_in, currentYOffset)}`;
         } 
         if( scrollRatio <= 0.65 ) {
+          objs.leftBoxMsg.style.display = 'block';
+          objs.rightBoxMsg.style.display = 'block';
           objs.leftBox.style.left = `${calcValues(values.leftBox_left_in, currentYOffset)}vw`;
           objs.rightBox.style.right = `${calcValues(values.rightBox_right_in, currentYOffset)}vw`;
           objs.list.style.opacity = `${calcValues(values.list_opacity_in, currentYOffset)}`;
@@ -303,7 +310,10 @@
             mousePos.y = 1 - (e.clientY / window.innerHeight) * 2;
             objs.list.style.transform = `rotateX( ${mousePos.y * 20}deg) rotateY( ${mousePos.x * 20}deg)`;
           })
+          
         } else {
+          objs.leftBoxMsg.style.display = 'none';
+          objs.rightBoxMsg.style.display = 'none';
           objs.leftBox.style.left = `${calcValues(values.leftBox_left_out, currentYOffset)}vw`;
           objs.rightBox.style.right = `${calcValues(values.rightBox_right_out, currentYOffset)}vw`;
           objs.list.style.opacity = `${calcValues(values.list_opacity_out, currentYOffset)}`;

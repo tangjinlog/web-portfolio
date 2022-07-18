@@ -56,7 +56,7 @@
     },
     { 
       type: 'sticky',
-      heightNum: 5,
+      heightNum: 7,
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-2'),
@@ -71,11 +71,11 @@
       values: {
         listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0.5 }],
         listRocket_opacity_in: [0, 1, { start: 0.01, end: 0.05 }],
-        listRocket_width_in: [0, 160, { start: 0.01, end: 0.5 }],
+        listRocket_width_in: [0, 0, { start: 0.01, end: 0.5 }],
         leftBox_width_in: [0, 30, { start: 0.01, end: 0.5 }],
         rightBox_width_in: [0, 30, { start: 0.01, end: 0.5 }],
-        leftBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
-        rightBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
+        leftBox_height_in: [0, 100, { start: 0.01, end: 0.5 }],
+        rightBox_height_in: [0, 100, { start: 0.01, end: 0.5 }],
         leftBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
         rightBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
         leftBox_left_in: [0, 55, { start: 0.55, end: 0.65 }],
@@ -272,6 +272,12 @@
       }
       break;
       case 2: {
+        const ratio = window.innerWidth / window.innerHeight;
+        if( ratio < 1 ) {
+          values.listRocket_width_in[1] = 250;
+        } else {
+          values.listRocket_width_in[1] = 160;
+        }
         // if( !values.svgStartY ) {
         //   values.svgStartY = objs.yPosition.offsetTop;
         //   values.listRocket_width_in[2].start = (window.innerHeight / 2) / scrollHeight;
@@ -333,8 +339,11 @@
           objs.listRocket.style.top = '82%';
         }
       }
+      break;
+      case 3: {
+        
+      }
     }
-
   }
 
 

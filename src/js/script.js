@@ -46,7 +46,7 @@
       objs: {
         container: document.querySelector('#scroll-section-1'),
         rocket: document.querySelector('.rocket-svg'),
-        rocketCon: document.querySelector('.rocket-con'),
+        moveRocketCon: document.querySelector('.rocket-con'),
         // rocketMsg: document.querySelector('.rocket-msg'),
       
       },
@@ -76,6 +76,8 @@
         rightBox_width_in: [0, 30, { start: 0.01, end: 0.5 }],
         leftBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
         rightBox_height_in: [0, 120, { start: 0.01, end: 0.5 }],
+        leftBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
+        rightBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
         leftBox_left_in: [0, 55, { start: 0.55, end: 0.65 }],
         rightBox_right_in: [0, 55, { start: 0.55, end: 0.65 }],
         list_opacity_in: [0, 1, { start: 0.58, end: 0.65 }],
@@ -84,8 +86,7 @@
         list_scale_out: [1, 0.5, { start: 0.73, end: 0.77 }],
         leftBox_left_out: [55, 0, { start: 0.73, end: 0.8 }],
         rightBox_right_out: [55, 0, { start: 0.73, end: 0.8 }],
-        leftBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
-        rightBoxMsg_opacity_in: [0, 1, { start: 0.4, end: 0.5 }],
+
         // svgStartY: 0,
         // listRocket_rotateY_in: [75, 0, { start: 0.01, end: 0 }],
         // listRocket_opacity_in: [0, 1, { start: 0.01, end: 0 }],
@@ -266,7 +267,7 @@
       case 1: {
         if( scrollRatio <= 0.6) {
           objs.rocket.style.transform = `rotate(-90deg)`;
-          objs.rocketCon.style.left = `${calcValues(values.rocket_left_in, currentYOffset)}%`;
+          objs.moveRocketCon.style.left = `${calcValues(values.rocket_left_in, currentYOffset)}%`;
         }
       }
       break;
@@ -319,7 +320,18 @@
           objs.list.style.opacity = `${calcValues(values.list_opacity_out, currentYOffset)}`;
           objs.list.style.transform = `scale(${calcValues(values.list_scale_out, currentYOffset)})`;
         }
-        
+        if( scrollRatio <= 0.78) {
+          objs.list.style.display = 'grid';
+        } else {
+          objs.list.style.display = 'none';
+        }
+        if( scrollRatio <= 0.82 ) {
+          objs.listRocket.style.position = 'fixed';
+          objs.listRocket.style.top = `0%`;
+        } else {
+          objs.listRocket.style.position = 'absolute';
+          objs.listRocket.style.top = '82%';
+        }
       }
     }
 

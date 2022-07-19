@@ -328,6 +328,48 @@ a {
 
 }
 
+.img-con {
+  position: relative;
+  top: 70%;
+  width: 25vw;
+  height: auto;
+  outline: 2px solid limegreen;
+  margin: 0 auto;
+  border-radius: 50%;
+  transition: .5s;
+}
+
+.svg-con {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+}
+
+svg {
+  width: 35vw;
+  height: auto;
+  transition: .5s;
+  outline: 2px solid limegreen;
+  
+}
+
+svg text {
+    font-size: 25px;
+    font-family: Helvetica Neue, sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    /* letter-spacing: 5px; */
+    fill: red;
+}
+
+.img-con:hover .svg-con text {
+  fill: rgba(255, 227, 17, 0.975);
+  /* font-size: 5rem; */
+}
+
+.img-con:hover svg {
+  transform: scale(3);
+}
 /* .y-position {
   color: white;
   font-size: 2rem;

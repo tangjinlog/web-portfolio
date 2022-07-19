@@ -65,6 +65,7 @@
         rightBox: document.querySelector('.right-box'),
         leftBoxMsg : document.querySelector('.left-box-msg'),
         rightBoxMsg : document.querySelector('.right-box-msg'),
+        listCon: document.querySelector('.l-list-con'),
         list: document.querySelector('.l-list'),
         
       },
@@ -304,33 +305,38 @@
           objs.rightBox.style.height = `${calcValues(values.rightBox_height_in, currentYOffset)}vh`;
           objs.leftBoxMsg.style.opacity = `${calcValues(values.leftBoxMsg_opacity_in, currentYOffset)}`;
           objs.rightBoxMsg.style.opacity = `${calcValues(values.rightBoxMsg_opacity_in, currentYOffset)}`;
+          objs.list.style.display = 'none';
         } 
-        if( scrollRatio <= 0.65 ) {
+
+        if( scrollRatio >= 0.54 && scrollRatio <= 0.65 ) {
+          objs.list.style.display = 'grid';
           objs.leftBoxMsg.style.display = 'block';
           objs.rightBoxMsg.style.display = 'block';
           objs.leftBox.style.left = `${calcValues(values.leftBox_left_in, currentYOffset)}vw`;
           objs.rightBox.style.right = `${calcValues(values.rightBox_right_in, currentYOffset)}vw`;
           objs.list.style.opacity = `${calcValues(values.list_opacity_in, currentYOffset)}`;
-          objs.list.style.transform = `scale(${calcValues(values.list_scale_in, currentYOffset)})`;
-          window.addEventListener('mousemove', (e)=> {
+          objs.listCon.style.transform = `scale(${calcValues(values.list_scale_in, currentYOffset)})`;
+          objs.list.addEventListener('mousemove', (e)=> {
             mousePos.x = -1 + (e.clientX / window.innerWidth) * 2;
             mousePos.y = 1 - (e.clientY / window.innerHeight) * 2;
-            objs.list.style.transform = `rotateX( ${mousePos.y * 20}deg) rotateY( ${mousePos.x * 20}deg)`;
+            objs.list.style.transform = `rotateX( ${mousePos.y * 20}deg ) rotateY( ${mousePos.x * 20}deg )`;
           })
-          
-        } else {
+        }
+
+        if( scrollRatio >= 0.73 && scrollRatio <= 0.80) {
+          objs.list.style.display = 'grid';
           objs.leftBoxMsg.style.display = 'none';
           objs.rightBoxMsg.style.display = 'none';
           objs.leftBox.style.left = `${calcValues(values.leftBox_left_out, currentYOffset)}vw`;
           objs.rightBox.style.right = `${calcValues(values.rightBox_right_out, currentYOffset)}vw`;
           objs.list.style.opacity = `${calcValues(values.list_opacity_out, currentYOffset)}`;
-          objs.list.style.transform = `scale(${calcValues(values.list_scale_out, currentYOffset)})`;
+          // objs.list.style.transform = `scale(${calcValues(values.list_scale_out, currentYOffset)})`;
         }
-        if( scrollRatio <= 0.78) {
-          objs.list.style.display = 'grid';
-        } else {
+        if( scrollRatio >= 0.81 ) {
           objs.list.style.display = 'none';
+
         }
+        
         if( scrollRatio <= 0.82 ) {
           objs.listRocket.style.position = 'fixed';
           objs.listRocket.style.top = `0%`;

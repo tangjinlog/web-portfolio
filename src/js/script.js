@@ -107,6 +107,12 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-3'),
+        imgCon: document.querySelector('.img-con'),
+        svgCon: document.querySelector('.svg-con'),
+        svgText : document.querySelector('.svg-text'),
+        defs: document.querySelector('.defs'),
+        hoverText: document.querySelector('.path-hover'),
+        hoverOutText: document.querySelector('.path-hoverout'),
       } 
     },
   ]
@@ -347,7 +353,26 @@
       }
       break;
       case 3: {
+        const pathHoverOut = document.createElement('path');
+        pathHoverOut.setAttribute('d', 'M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250');
+        pathHoverOut.setAttribute('id', 'textcircle_top');
         
+        const pathHover = document.createElement('path');
+        pathHover.setAttribute('d', 'M30,250, H550');
+        pathHover.setAttribute('id', 'textcircle_top');
+
+        if( document.getElementById('textcircle_top') === null ) {
+          // objs.defs.appendChild(pathHoverOut);
+          objs.defs.innerHTML = '' 
+          + '<path class="path-hoverout" d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250" id="textcircle_top">'
+          + '<animateTransform class="node" attributeName="transform" begin="0s" dur="20s" type="rotate" from="0 250 250" to="360 250 250" repeatCount="indefinite" />'
+        } 
+        // objs.imgCon.addEvlentListener('mouseover', ()=> {
+        //   objs.defs.replaceChild(pathHover, pathHoverOut);
+        // })
+        // objs.imgCon.addEventListener('mouseout', ()=> {
+        //   objs.defs.replaceChild(pathHoverOut, pathHover);
+        // })
       }
     }
   }

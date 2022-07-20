@@ -33,6 +33,18 @@ a {
 }
 
 /* ------------------- */
+/*      Animation      */
+/* ------------------- */
+@keyframes earth-rotate {
+  to {
+    transform: rotateZ(-360deg);
+  }
+}
+
+
+
+
+/* ------------------- */
 /*   Utility classes   */
 /* ------------------- */
 .grid-container {
@@ -335,19 +347,26 @@ a {
   height: auto;
   outline: 2px solid limegreen;
   margin: 0 auto;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   transition: .5s;
 }
 
+/* 마우스 오버 전 */
 .svg-con {
   position: absolute;
   top: -20%;
   left: -20%;
 }
+/* 마우스 오버시 */
+/* .svg-con {
+  position: absolute;
+  top: 35%;
+  left: -20%;
+} */
 
 svg {
+  /* border-radius: 50%; */
   width: 35vw;
-  height: auto;
   transition: .5s;
   outline: 2px solid limegreen;
   
@@ -356,20 +375,24 @@ svg {
 svg text {
     font-size: 25px;
     font-family: Helvetica Neue, sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
+    font-weight: 700;
+    /* text-transform: uppercase; */
     /* letter-spacing: 5px; */
     fill: red;
 }
 
-.img-con:hover .svg-con text {
-  fill: rgba(255, 227, 17, 0.975);
-  /* font-size: 5rem; */
+.earth-con {
+  animation: earth-rotate 20s linear infinite;
 }
 
-.img-con:hover svg {
-  transform: scale(3);
+.img-con:hover .svg-con svg {
+  /* transform: scale(3); */
+  /* letter-spacing: 50px; */
 }
+
+
+
+
 /* .y-position {
   color: white;
   font-size: 2rem;

@@ -369,7 +369,7 @@ svg {
   width: 35vw;
   transition: .5s;
   outline: 2px solid limegreen;
-  
+  z-index: 2;
 }
 
 svg text {

@@ -108,11 +108,12 @@
       objs: {
         container: document.querySelector('#scroll-section-3'),
         imgCon: document.querySelector('.img-con'),
+        earthCon: document.querySelector('.earth-con'),
+        preventDiv : document.querySelector('.prevent-div'),
         svgCon: document.querySelector('.svg-con'),
         svg: document.querySelector('.text-circle'),
         svgText : document.querySelector('.svg-text'),
         defs: document.querySelector('.defs'),
-        hoverText: document.querySelector('.path-hover'),
         hoverOutText: document.querySelector('.path-hoverout'),
         animate: document.querySelector('.animate'),
       } 
@@ -363,22 +364,25 @@
         pathHover.setAttribute('d', 'M30,250, H550');
         pathHover.setAttribute('id', 'textcircle_top');
 
-        const animate = objs.animate;
-        
-
-        objs.imgCon.addEventListener('mouseover', ()=> {
+        objs.svgCon.addEventListener('mouseover', ()=> {
           objs.hoverOutText.setAttribute('d', 'M30,250, H550');
           objs.svg.setAttribute('viewBox', '0 190 410 100');
-          objs.svgCon.style.top = '35%';
+          objs.svgCon.style.top = '29%';
           objs.svgCon.style.transform = `scale(3)`
-          objs.hoverOutText.removeChild(animate);
+          objs.animate.setAttribute('to', '0 250 250');
+          // objs.preventDiv.style.zIndex = 3;
+          // objs.svgCon.style.zIndex = 5;
         })
-        objs.imgCon.addEventListener('mouseout', ()=> {
+        objs.svgCon.addEventListener('mouseout', ()=> {
           objs.hoverOutText.setAttribute('d', 'M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250');
           objs.svg.setAttribute('viewBox', '0 0 500 500');
           objs.svgCon.style.top = '-20%';
           objs.svgCon.style.transform = `scale(1)`
-          objs.hoverOutText.appendChild(animate);
+          objs.animate.setAttribute('to', '360 250 250');
+
+          // objs.svgCon.style.zIndex = 1;
+          // objs.earthCon.style.zIndex = 3;
+
         })
         // if( document.getElementById('textcircle_top') === null ) {
         //   objs.defs.innerHTML = '' 

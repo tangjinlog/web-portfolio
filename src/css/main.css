@@ -388,7 +388,7 @@ svg text:hover {
   z-index: 3;
   position: absolute;
   top: 0;
-  /* animation: earth-rotate 20s linear infinite; */
+  animation: earth-rotate 20s linear infinite;
 }
 
 .img-con::before,

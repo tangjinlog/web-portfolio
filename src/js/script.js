@@ -116,7 +116,11 @@
         context: document.querySelector('.image-blend-canvas').getContext('2d'),
         imagePath: [
           './images/bg-star.png',
-          './images/example.png'
+          './images/bg-star-black.png',
+          './images/white-canvas.png',
+          './images/white-canvas1.png',
+          './images/black-canvas.png',
+          './images/bg-gradient.png',
         ],
         images: [],
       },
@@ -380,7 +384,11 @@
       }
       break;
       case 3: {
-        // const whiteCanvas = document.createElement('div').setAttribute()
+        // const whiteCanvas = document.createElement('img')
+        // whiteCanvas.setAttribute('width', '1920');
+        // whiteCanvas.setAttribute('height', '1080');
+        // whiteCanvas.setAttribute('background', 'transparent');
+        // console.log(whiteCanvas)
         const prevStickyElem = document.querySelector('#scroll-section-2 .sticky-elem');
 
         const widthRatio = window.innerWidth / objs.canvas.width;
@@ -392,34 +400,34 @@
           canvasScaleRatio = widthRatio;
         }
         objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
-        objs.context.fillStyle = 'white';
-        objs.context.drawImage(objs.canvas, 0, 0)
+        objs.context.drawImage(objs.images[1], 0, 0)
         console.log(scrollRatio);
+        objs.canvas.classList.remove('sticky');
         
         if(scrollRatio < 0.042) {
-          objs.canvas.classList.remove('sticky');
+          
+          // objs.canvas.classList.add('sticky');
           prevStickyElem.style.position = 'absolute';
           prevStickyElem.style.top = '82%';
+          
+          
         } else {
           prevStickyElem.style.position = 'fixed';
           prevStickyElem.style.top = '-155vh';
-          // prevStickyElem.style.display = 'none';
-          // prevSticky.style.display = 'none';
-          // objs.canvas.style.backgroundColor = `orange`;
-          // objs.canvas.style.display = 'block';
+          
           values.blendHeight[0] = 0;
           values.blendHeight[1] = objs.canvas.height;
-          values.blendHeight[2].start = 0.061;
+          values.blendHeight[2].start = 0.043;
           values.blendHeight[2].end = 0.2;
           const blendHeight = calcValues(values.blendHeight, currentYOffset);
           // console.log(blendHeight);
           objs.context.drawImage(objs.images[0],
-            0, (objs.canvas.height - blendHeight) , objs.canvas.width, blendHeight,
             0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight,
+            0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight
             )
             
             objs.canvas.classList.add('sticky');
-            objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+              objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
         }
   
           

@@ -103,20 +103,26 @@
     },
     {
       type: 'sticky',
-      heightNum: 5,
+      heightNum: 7,
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#scroll-section-3'),
         imgCon: document.querySelector('.img-con'),
-        earthCon: document.querySelector('.earth-con'),
-        preventDiv : document.querySelector('.prevent-div'),
         svgCon: document.querySelector('.svg-con'),
         svg: document.querySelector('.text-circle'),
-        svgText : document.querySelector('.svg-text'),
-        defs: document.querySelector('.defs'),
         hoverOutText: document.querySelector('.path-hoverout'),
         animate: document.querySelector('.animate'),
-      } 
+        canvas: document.querySelector('.image-blend-canvas'),
+        context: document.querySelector('.image-blend-canvas').getContext('2d'),
+        imagePath: [
+          './images/bg-star.png',
+          './images/example.png'
+        ],
+        images: [],
+      },
+      values: {
+        blendHeight: [0, 0, { start: 0, end: 0} ],
+      }
     },
   ]
 
@@ -141,6 +147,20 @@
     }
     document.body.setAttribute('id', `show-scene-${currentScene}`);
   }
+
+  /* ------------------- */
+  /*        Canvas       */
+  /* ------------------- */
+  function setCanvasImages() {
+    
+    let imgElem;
+    for( let i = 0; i < sceneInfo[3].objs.imagePath.length; i++ ) {
+      imgElem = new Image();
+      imgElem.src = sceneInfo[3].objs.imagePath[i];
+      sceneInfo[3].objs.images.push(imgElem);
+    }
+  }
+
 
   function checkMenu() {
     const objs = sceneInfo[currentScene].objs;
@@ -175,8 +195,12 @@
     }
     /* 스크롤 내릴 때 */
     if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
-      currentScene++;
-      document.body.setAttribute('id', `show-scene-${currentScene}`);
+      enterNewScene = true;
+
+      if( currentScene < sceneInfo.length - 1 ) {
+        currentScene++;
+        document.body.setAttribute('id', `show-scene-${currentScene}`);
+      }
     }
     /* 스크롤 올릴 때 */
     if (yOffset < prevScrollHeight) {
@@ -356,52 +380,66 @@
       }
       break;
       case 3: {
-        const pathHoverOut = document.createElement('path');
-        pathHoverOut.setAttribute('d', 'M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250');
-        pathHoverOut.setAttribute('id', 'textcircle_top');
+        // const whiteCanvas = document.createElement('div').setAttribute()
+        const prevStickyElem = document.querySelector('#scroll-section-2 .sticky-elem');
+
+        const widthRatio = window.innerWidth / objs.canvas.width;
+        const heightRatio = window.innerHeight / objs.canvas.height;
+        let canvasScaleRatio;
+        if( widthRatio <= heightRatio) {
+          canvasScaleRatio = heightRatio;
+        } else {
+          canvasScaleRatio = widthRatio;
+        }
+        objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+        objs.context.fillStyle = 'white';
+        objs.context.drawImage(objs.canvas, 0, 0)
+        console.log(scrollRatio);
         
-        const pathHover = document.createElement('path');
-        pathHover.setAttribute('d', 'M30,250, H550');
-        pathHover.setAttribute('id', 'textcircle_top');
+        if(scrollRatio < 0.042) {
+          objs.canvas.classList.remove('sticky');
+          prevStickyElem.style.position = 'absolute';
+          prevStickyElem.style.top = '82%';
+        } else {
+          prevStickyElem.style.position = 'fixed';
+          prevStickyElem.style.top = '-155vh';
+          // prevStickyElem.style.display = 'none';
+          // prevSticky.style.display = 'none';
+          // objs.canvas.style.backgroundColor = `orange`;
+          // objs.canvas.style.display = 'block';
+          values.blendHeight[0] = 0;
+          values.blendHeight[1] = objs.canvas.height;
+          values.blendHeight[2].start = 0.061;
+          values.blendHeight[2].end = 0.2;
+          const blendHeight = calcValues(values.blendHeight, currentYOffset);
+          // console.log(blendHeight);
+          objs.context.drawImage(objs.images[0],
+            0, (objs.canvas.height - blendHeight) , objs.canvas.width, blendHeight,
+            0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight,
+            )
+            
+            objs.canvas.classList.add('sticky');
+            objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+        }
+  
+          
+          objs.svgCon.addEventListener('mouseover', ()=> {
+            objs.hoverOutText.setAttribute('d', 'M30,250, H550');
+            objs.svg.setAttribute('viewBox', '0 190 410 100');
+            objs.svgCon.style.top = '29%';
+            objs.svgCon.style.transform = `scale(3)`
+            objs.animate.setAttribute('to', '0 250 250');
+          })
+          objs.svgCon.addEventListener('mouseout', ()=> {
+            objs.hoverOutText.setAttribute('d', 'M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250');
+            objs.svg.setAttribute('viewBox', '0 0 500 500');
+            objs.svgCon.style.top = '-20%';
+            objs.svgCon.style.transform = `scale(1)`
+            objs.animate.setAttribute('to', '360 250 250');
+  
+  
+          })
 
-        objs.svgCon.addEventListener('mouseover', ()=> {
-          objs.hoverOutText.setAttribute('d', 'M30,250, H550');
-          objs.svg.setAttribute('viewBox', '0 190 410 100');
-          objs.svgCon.style.top = '29%';
-          objs.svgCon.style.transform = `scale(3)`
-          objs.animate.setAttribute('to', '0 250 250');
-          // objs.preventDiv.style.zIndex = 3;
-          // objs.svgCon.style.zIndex = 5;
-        })
-        objs.svgCon.addEventListener('mouseout', ()=> {
-          objs.hoverOutText.setAttribute('d', 'M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250');
-          objs.svg.setAttribute('viewBox', '0 0 500 500');
-          objs.svgCon.style.top = '-20%';
-          objs.svgCon.style.transform = `scale(1)`
-          objs.animate.setAttribute('to', '360 250 250');
-
-          // objs.svgCon.style.zIndex = 1;
-          // objs.earthCon.style.zIndex = 3;
-
-        })
-        // if( document.getElementById('textcircle_top') === null ) {
-        //   objs.defs.innerHTML = '' 
-        //   + '<path class="path-hoverout" d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250" id="textcircle_top">'
-        //   + '<animateTransform class="node" attributeName="transform" begin="0s" dur="20s" type="rotate" from="0 250 250" to="360 250 250" repeatCount="indefinite" />'
-        // } 
-        // objs.imgCon.addEventListener('mouseover', ()=> {
-        //   objs.defs.innerHTML = ''
-        //   + '<path class="path-hoverout" d="M30,250, H550" id="textcircle_top">';
-        //   objs.svg.setAttribute('viewBox', '0 190 410 100');
-        //   objs.svgCon.style.top = '35%';
-        // })
-        // objs.imgCon.addEventListener('mouseout', ()=> {
-        //   objs.defs.innerHTML = '' 
-        //   + '<path class="path-hoverout" d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250" id="textcircle_top">'
-        //   + '<animateTransform class="node" attributeName="transform" begin="0s" dur="20s" type="rotate" from="0 250 250" to="360 250 250" repeatCount="indefinite" />';
-        //   objs.svg.setAttribute('viewBox', '0 0 500 500');
-        //   objs.svgCon.style.top = '-20%';
-        // })
       }
     }
   }
@@ -442,7 +480,7 @@
     })
 
   })
-
+  setCanvasImages();
 
 
 

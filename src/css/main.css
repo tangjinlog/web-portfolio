@@ -343,7 +343,7 @@ a {
 
 .img-con {
   position: relative;
-  top: 35%;
+  top: 25%;
   width: 25vw;
   height: 50vh;
   /* outline: 2px solid limegreen; */
@@ -408,9 +408,16 @@ svg text:hover {
 
 
 .image-blend-canvas {
-  /* display: none; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
   outline: 3px solid dodgerblue;
   /* background: rgba(30, 144, 255, 0.5) */
+}
+.canvas-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* .div1 {
   text-align: center;

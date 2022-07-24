@@ -400,7 +400,7 @@
           canvasScaleRatio = widthRatio;
         }
         objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
-        objs.context.drawImage(objs.images[1], 0, 0)
+        // objs.context.drawImage(objs.images[1], 0, 0)
         console.log(scrollRatio);
         objs.canvas.classList.remove('sticky');
         
@@ -421,10 +421,10 @@
           values.blendHeight[2].end = 0.2;
           const blendHeight = calcValues(values.blendHeight, currentYOffset);
           // console.log(blendHeight);
-          objs.context.drawImage(objs.images[0],
-            0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight,
-            0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight
-            )
+          // objs.context.drawImage(objs.images[0],
+          //   0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight,
+          //   0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight
+          //   )
             
             objs.canvas.classList.add('sticky');
               objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;

@@ -334,7 +334,7 @@ a {
 /* canvas */
 .image-blend-canvas.sticky {
   position: fixed;
-  top: 0;
+  top: -65px;
 }
 
 
@@ -343,7 +343,7 @@ a {
 
 .img-con {
   position: relative;
-  top: 25%;
+  top: 45%;
   width: 25vw;
   height: 50vh;
   /* outline: 2px solid limegreen; */
@@ -416,8 +416,11 @@ svg text:hover {
 }
 .canvas-con {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
+  top: 40vh;
+
 }
 /* .div1 {
   text-align: center;

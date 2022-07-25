@@ -125,6 +125,7 @@
         images: [],
       },
       values: {
+        canvas_opacity_in: [0, 1, { start: 0.16, end: 0.195} ],
         blendHeight: [0, 0, { start: 0, end: 0} ],
       }
     },
@@ -400,31 +401,31 @@
           canvasScaleRatio = widthRatio;
         }
         objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
-        // objs.context.drawImage(objs.images[1], 0, 0)
+        objs.context.drawImage(objs.images[1], 0, 0)
         console.log(scrollRatio);
-        objs.canvas.classList.remove('sticky');
+        // objs.canvas.classList.remove('sticky');
         
-        if(scrollRatio < 0.042) {
-          
-          // objs.canvas.classList.add('sticky');
-          prevStickyElem.style.position = 'absolute';
-          prevStickyElem.style.top = '82%';
+        if(scrollRatio < 0.20) {
+          objs.canvas.classList.add('sticky');
+          objs.canvas.style.opacity = `${calcValues(values.canvas_opacity_in, currentYOffset)}`;
+          // prevStickyElem.style.position = 'absolute';
+          // prevStickyElem.style.top = '82%';
           
           
         } else {
-          prevStickyElem.style.position = 'fixed';
-          prevStickyElem.style.top = '-155vh';
+          // prevStickyElem.style.position = 'fixed';
+          // prevStickyElem.style.top = '-155vh';
           
           values.blendHeight[0] = 0;
           values.blendHeight[1] = objs.canvas.height;
-          values.blendHeight[2].start = 0.043;
-          values.blendHeight[2].end = 0.2;
+          values.blendHeight[2].start = 0.22
+          values.blendHeight[2].end = 0.4;
           const blendHeight = calcValues(values.blendHeight, currentYOffset);
-          // console.log(blendHeight);
-          // objs.context.drawImage(objs.images[0],
-          //   0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight,
-          //   0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight
-          //   )
+          console.log(blendHeight);
+          objs.context.drawImage(objs.images[0],
+            0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight,
+            0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight
+            )
             
             objs.canvas.classList.add('sticky');
               objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;

@@ -125,7 +125,7 @@
         images: [],
       },
       values: {
-        canvas_opacity_in: [0, 1, { start: 0.16, end: 0.195} ],
+        canvas_opacity_in: [0, 1, { start: 0.16, end: 0.24} ],
         blendHeight: [0, 0, { start: 0, end: 0} ],
       }
     },
@@ -405,8 +405,10 @@
         console.log(scrollRatio);
         // objs.canvas.classList.remove('sticky');
         
-        if(scrollRatio < 0.20) {
+        if(scrollRatio < 0.25) {
           objs.canvas.classList.add('sticky');
+          objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+
           objs.canvas.style.opacity = `${calcValues(values.canvas_opacity_in, currentYOffset)}`;
           // prevStickyElem.style.position = 'absolute';
           // prevStickyElem.style.top = '82%';
@@ -427,8 +429,7 @@
             0, (objs.canvas.height - blendHeight), objs.canvas.width, blendHeight
             )
             
-            objs.canvas.classList.add('sticky');
-              objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+            // objs.canvas.classList.add('sticky');
         }
   
           

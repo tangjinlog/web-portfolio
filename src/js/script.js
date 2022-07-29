@@ -31,10 +31,10 @@
         messageB_opacity_in: [0, 1, { start: 0.27, end: 0.33 }],
         messageA_opacity_out: [1, 0, { start: 0.25, end: 0.31 }],
         messageB_opacity_out: [1, 0, { start: 0.43, end: 0.49 }],
-        mainLogo_width_in: [2000, 100, { start: 0.5, end: 0.7 }],
+        mainLogo_width_in: [3000, 100, { start: 0.5, end: 0.7 }],
         mainLogo_width_out: [100, 80, { start: 0.7, end: 0.75 }],
-        mainLogo_translateX_in: [-15, -50, { start: 0.6, end: 0.75 }],
-        mainLogo_translateY_in: [-45, -50, { start: 0.6, end: 0.75 }],
+        mainLogo_translateX_in: [-15.3, -50, { start: 0.6, end: 0.75 }],
+        mainLogo_translateY_in: [-45.5, -50, { start: 0.6, end: 0.75 }],
         mainLogo_opacity_out: [1, 0, { start: 0.8, end: 0.86 }],
         svgStartY: 0,
       } 
@@ -115,14 +115,16 @@
         canvas: document.querySelector('.image-blend-canvas'),
         context: document.querySelector('.image-blend-canvas').getContext('2d'),
         imagePath: [
+          // './images/bg-star-cc.png',
+          // './images/bg-star-black-cc.png',
           './images/bg-star.png',
           './images/bg-star-black.png',
-          './images/white-canvas.png',
-          './images/white-canvas1.png',
-          './images/black-canvas.png',
-          './images/bg-gradient.png',
-          './images/blend-image-1.jpg',
-          './images/blend-image-2.jpg',
+          // './images/white-canvas.png',
+          // './images/white-canvas1.png',
+          // './images/black-canvas.png',
+          // './images/bg-gradient.png',
+          // './images/blend-image-1.jpg',
+          // './images/blend-image-2.jpg',
         ],
         images: [],
       },
@@ -224,7 +226,8 @@
 3
     if (enterNewScene) return;
     
-    playAnimation();
+      playAnimation();
+
   }
 
   // function loop() {
